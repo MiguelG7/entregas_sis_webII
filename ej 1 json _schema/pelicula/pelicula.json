@@ -1,0 +1,18 @@
+{
+    "title": "Inception",
+    "year": 2010,
+    "genre": ["Action", "Sci-Fi"],
+    "director": "Christopher Nolan",
+    "rating": 8.8,
+    "actors": [
+      {
+        "name": "Leonardo DiCaprio",
+        "role": "Cobb"
+      },
+      {
+        "name": "Joseph Gordon-Levitt",
+        "role": "Arthur"
+      }
+    ]
+  }
+  

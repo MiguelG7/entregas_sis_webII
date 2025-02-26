@@ -1,0 +1,11 @@
+{
+    "name": "Starry Night",
+    "artist": "Vincent van Gogh",
+    "description": "A masterpiece of post-impressionism.",
+    "dimension": {
+      "width": 74,
+      "height": 92
+    },
+    "tags": ["oil", "famous"]
+  }
+  

@@ -1,0 +1,29 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "squadName": { "type": "string" },
+      "homeTown": { "type": "string" },
+      "formed": { "type": "integer" },
+      "secretBase": { "type": "string" },
+      "active": { "type": "boolean" },
+      "members": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "age": { "type": "integer" },
+            "secretIdentity": { "type": "string" },
+            "powers": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          },
+          "required": ["name", "age", "secretIdentity", "powers"]
+        }
+      }
+    },
+    "required": ["squadName", "homeTown", "formed", "secretBase", "active", "members"]
+  }
+  
