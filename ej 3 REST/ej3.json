@@ -1,0 +1,155 @@
+{
+    "service": "Cine Web API",
+    "description": "API para obtener información de la cartelera y las sesiones de un cine.",
+    "base_url": "/api/v1",
+    "routes": [
+      {
+        "route": "/movies",
+        "method": "GET",
+        "description": "Obtiene la lista de todas las películas disponibles en cartelera.",
+        "response": {
+          "status_code": 200,
+          "body": [
+            {
+              "id": 1,
+              "title": "Película A",
+              "description": "Descripción de la película A",
+              "duration": "120 min",
+              "rating": "PG-13",
+              "genres": ["acción", "drama"]
+            },
+            {
+              "id": 2,
+              "title": "Película B",
+              "description": "Descripción de la película B",
+              "duration": "90 min",
+              "rating": "R",
+              "genres": ["comedia"]
+            }
+          ]
+        }
+      },
+      {
+        "route": "/movies/{id}",
+        "method": "GET",
+        "description": "Obtiene información detallada de una película específica.",
+        "parameters": [
+          {
+            "name": "id",
+            "type": "integer",
+            "description": "El ID de la película"
+          }
+        ],
+        "response": {
+          "status_code": 200,
+          "body": {
+            "id": 1,
+            "title": "Película A",
+            "description": "Descripción de la película A",
+            "duration": "120 min",
+            "rating": "PG-13",
+            "genres": ["acción", "drama"],
+            "sessions": [
+              {
+                "id": 101,
+                "time": "2025-03-04T18:00:00",
+                "cinema": "Sala 1"
+              },
+              {
+                "id": 102,
+                "time": "2025-03-04T21:00:00",
+                "cinema": "Sala 2"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "route": "/sessions",
+        "method": "GET",
+        "description": "Obtiene la lista de todas las sesiones disponibles para todas las películas.",
+        "response": {
+          "status_code": 200,
+          "body": [
+            {
+              "session_id": 101,
+              "movie_title": "Película A",
+              "time": "2025-03-04T18:00:00",
+              "cinema": "Sala 1"
+            },
+            {
+              "session_id": 102,
+              "movie_title": "Película B",
+              "time": "2025-03-04T21:00:00",
+              "cinema": "Sala 2"
+            }
+          ]
+        }
+      },
+      {
+        "route": "/sessions/{id}",
+        "method": "GET",
+        "description": "Obtiene información detallada sobre una sesión específica.",
+        "parameters": [
+          {
+            "name": "id",
+            "type": "integer",
+            "description": "El ID de la sesión"
+          }
+        ],
+        "response": {
+          "status_code": 200,
+          "body": {
+            "session_id": 101,
+            "movie_title": "Película A",
+            "time": "2025-03-04T18:00:00",
+            "cinema": "Sala 1"
+          }
+        }
+      },
+      {
+        "route": "/movies",
+        "method": "POST",
+        "description": "Añade una nueva película a la cartelera.",
+        "request_body": {
+          "title": "string",
+          "description": "string",
+          "duration": "string",
+          "rating": "string",
+          "genres": ["array of strings"]
+        },
+        "response": {
+          "status_code": 201,
+          "body": {
+            "message": "Película añadida con éxito",
+            "movie_id": 3
+          }
+        }
+      },
+      {
+        "route": "/sessions",
+        "method": "POST",
+        "description": "Añade una nueva sesión para una película.",
+        "request_body": {
+          "movie_id": "integer",
+          "time": "string (ISO 8601)",
+          "cinema": "string"
+        },
+        "response": {
+          "status_code": 201,
+          "body": {
+            "message": "Sesión añadida con éxito",
+            "session_id": 103
+          }
+        }
+      }
+    ],
+    "status_codes": {
+      "200": "OK - La solicitud se procesó correctamente.",
+      "201": "Created - El recurso se creó con éxito.",
+      "400": "Bad Request - La solicitud es inválida o contiene errores.",
+      "404": "Not Found - El recurso solicitado no se encontró.",
+      "500": "Internal Server Error - Ocurrió un error en el servidor."
+    }
+  }
+  
