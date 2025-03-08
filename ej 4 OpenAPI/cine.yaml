@@ -1,0 +1,200 @@
+openapi: 3.0.0
+info:
+  title: Cine Web API
+  description: API para obtener información de la cartelera y las sesiones de un cine.
+  version: 1.0.0
+servers:
+  - url: /api/v1
+paths:
+  /movies:
+    get:
+      summary: Obtiene la lista de todas las películas disponibles en cartelera.
+      responses:
+        '200':
+          description: Lista de películas obtenida con éxito.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    title:
+                      type: string
+                    description:
+                      type: string
+                    duration:
+                      type: string
+                    rating:
+                      type: string
+                    genres:
+                      type: array
+                      items:
+                        type: string
+    post:
+      summary: Añade una nueva película a la cartelera.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                duration:
+                  type: string
+                rating:
+                  type: string
+                genres:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '201':
+          description: Película añadida con éxito.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  movie_id:
+                    type: integer
+  /movies/{id}:
+    get:
+      summary: Obtiene información detallada de una película específica.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: El ID de la película
+      responses:
+        '200':
+          description: Detalles de la película obtenidos con éxito.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  title:
+                    type: string
+                  description:
+                    type: string
+                  duration:
+                    type: string
+                  rating:
+                    type: string
+                  genres:
+                    type: array
+                    items:
+                      type: string
+                  sessions:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        time:
+                          type: string
+                        cinema:
+                          type: string
+  /sessions:
+    get:
+      summary: Obtiene la lista de todas las sesiones disponibles para todas las películas.
+      responses:
+        '200':
+          description: Lista de sesiones obtenida con éxito.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    session_id:
+                      type: integer
+                    movie_title:
+                      type: string
+                    time:
+                      type: string
+                    cinema:
+                      type: string
+    post:
+      summary: Añade una nueva sesión para una película.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                movie_id:
+                  type: integer
+                time:
+                  type: string
+                  format: date-time
+                cinema:
+                  type: string
+      responses:
+        '201':
+          description: Sesión añadida con éxito.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  session_id:
+                    type: integer
+  /sessions/{id}:
+    get:
+      summary: Obtiene información detallada sobre una sesión específica.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: El ID de la sesión
+      responses:
+        '200':
+          description: Detalles de la sesión obtenidos con éxito.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  session_id:
+                    type: integer
+                  movie_title:
+                    type: string
+                  time:
+                    type: string
+                    format: date-time
+                  cinema:
+                    type: string
+
+components:
+  responses:
+    200:
+      description: OK - La solicitud se procesó correctamente.
+    201:
+      description: Created - El recurso se creó con éxito.
+    400:
+      description: Bad Request - La solicitud es inválida o contiene errores.
+    404:
+      description: Not Found - El recurso solicitado no se encontró.
+    500:
+      description: Internal Server Error - Ocurrió un error en el servidor.
