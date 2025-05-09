@@ -1,0 +1,41 @@
+Enunciado:
+Crea un JSON Schema que defina un objeto con:
+
+"titulo": una cadena obligatoria.
+
+"descripcion": un campo que puede ser una cadena de texto o null.
+
+"autor": un objeto con dos propiedades:
+
+"nombre": cadena obligatoria.
+
+"edad": número mayor que 0.
+
+El campo "autor" debe ser obligatorio.
+
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "titulo": {
+      "type": "string"
+    },
+    "descripcion": {
+      "type": ["string", "null"]
+    },
+    "autor": {
+      "type": "object",
+      "properties": {
+        "nombre": {
+          "type": "string"
+        },
+        "edad": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": ["nombre", "edad"]
+    }
+  },
+  "required": ["titulo", "autor"]
+}

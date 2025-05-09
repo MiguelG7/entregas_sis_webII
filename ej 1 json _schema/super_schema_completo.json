@@ -1,0 +1,221 @@
+{
+  // Indica la versión del meta-esquema de JSON Schema que se está usando (draft 2020-12)
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+
+  // Identificador único del esquema, útil para referencias externas
+  "$id": "https://ejemplo.com/super-esquema.json",
+
+  // Título descriptivo del esquema
+  "title": "Super Esquema",
+
+  // Descripción general del propósito del esquema
+  "description": "Un JSON Schema ultra completo con todas las funcionalidades comunes y avanzadas.",
+
+  // Define que el objeto validado debe ser de tipo "object"
+  "type": "object",
+
+  // El objeto debe tener al menos 2 propiedades
+  "minProperties": 2,
+
+  // El objeto puede tener como máximo 10 propiedades
+  "maxProperties": 10,
+
+  // Las claves de las propiedades deben seguir este patrón (letra o guion bajo inicial, luego letras, números o guion bajo)
+  "propertyNames": {
+    "pattern": "^[a-zA-Z_][a-zA-Z0-9_]*$"
+  },
+
+  // Definición de las propiedades permitidas en el objeto
+  "properties": {
+    // Propiedad "nombre"
+    "nombre": {
+      // Debe ser una cadena de texto
+      "type": "string",
+      // Longitud mínima de 1 carácter
+      "minLength": 1,
+      // Longitud máxima de 100 caracteres
+      "maxLength": 100,
+      // Patrón: cada palabra inicia con mayúscula seguida de minúsculas, separadas por espacio
+      "pattern": "^[A-Z][a-z]+(\\s[A-Z][a-z]+)*$",
+      // Descripción de la propiedad
+      "description": "Nombre completo con mayúsculas iniciales",
+      // Ejemplo válido
+      "examples": [
+        "Juan Pérez"
+      ],
+      // Valor por defecto si no se especifica
+      "default": "Nombre Genérico"
+    },
+    // Propiedad "edad"
+    "edad": {
+      // Debe ser un número entero
+      "type": "integer",
+      // Valor mínimo permitido
+      "minimum": 0,
+      // Valor máximo permitido
+      "maximum": 120,
+      // Valor por defecto
+      "default": 18
+    },
+    // Propiedad "correo"
+    "correo": {
+      // Debe ser una cadena de texto
+      "type": "string",
+      // Debe cumplir con el formato de email
+      "format": "email"
+    },
+    // Propiedad "activo"
+    "activo": {
+      // Debe ser un valor booleano (true/false)
+      "type": "boolean",
+      // Valor por defecto
+      "default": true
+    },
+    // Propiedad "roles"
+    "roles": {
+      // Debe ser un arreglo
+      "type": "array",
+      // Cada elemento debe cumplir con la definición "$defs/rol"
+      "items": {
+        "$ref": "#/$defs/rol"
+      },
+      // Mínimo 1 elemento en el arreglo
+      "minItems": 1,
+      // Máximo 5 elementos en el arreglo
+      "maxItems": 5,
+      // Los elementos deben ser únicos
+      "uniqueItems": true,
+      // Al menos uno de los elementos debe ser "usuario"
+      "contains": {
+        "const": "usuario"
+      }
+    },
+    // Propiedad "configuracion"
+    "configuracion": {
+      // Debe ser un objeto
+      "type": "object",
+      // Las claves deben ser solo letras minúsculas
+      "propertyNames": {
+        "pattern": "^[a-z]+$"
+      },
+      // Las claves que empiecen por "debug_" deben tener valores booleanos
+      "patternProperties": {
+        "^debug_": {
+          "type": "boolean"
+        }
+      },
+      // El resto de propiedades deben ser cadenas de texto
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    // Propiedad "dependiente"
+    "dependiente": {
+      // Debe ser una cadena de texto
+      "type": "string"
+    }
+  },
+
+  // Lista de propiedades obligatorias en el objeto principal
+  "required": [
+    "nombre",
+    "edad",
+    "correo",
+    "activo",
+    "roles"
+  ],
+
+  // Si existe la propiedad "dependiente", también debe existir "correo"
+  "dependentRequired": {
+    "dependiente": [
+      "correo"
+    ]
+  },
+
+  // Si existe "dependiente", se aplican reglas adicionales a "correo"
+  "dependentSchemas": {
+    "dependiente": {
+      "properties": {
+        "correo": {
+          // "correo" debe ser un email válido
+          "type": "string",
+          "format": "email"
+        }
+      }
+    }
+  },
+
+  // El objeto debe cumplir con todos los esquemas listados (ambos "nombre" y "edad" requeridos)
+  "allOf": [
+    {
+      "required": [
+        "nombre"
+      ]
+    },
+    {
+      "required": [
+        "edad"
+      ]
+    }
+  ],
+
+  // El objeto debe cumplir al menos uno de los esquemas (edad <= 17 o activo == true)
+  "anyOf": [
+    {
+      "properties": {
+        "edad": {
+          "maximum": 17
+        }
+      }
+    },
+    {
+      "properties": {
+        "activo": {
+          "const": true
+        }
+      }
+    }
+  ],
+
+  // El objeto debe cumplir exactamente uno de los esquemas (nombre == "Ana" o nombre == "Luis")
+  "oneOf": [
+    {
+      "properties": {
+        "nombre": {
+          "const": "Ana"
+        }
+      }
+    },
+    {
+      "properties": {
+        "nombre": {
+          "const": "Luis"
+        }
+      }
+    }
+  ],
+
+  // El objeto NO debe cumplir este esquema (nombre != "Error")
+  "not": {
+    "properties": {
+      "nombre": {
+        "const": "Error"
+      }
+    }
+  },
+
+  // Definiciones reutilizables dentro del esquema
+  "$defs": {
+    // Definición de "rol" para usar en "roles"
+    "rol": {
+      // Debe ser una cadena de texto
+      "type": "string",
+      // Solo puede tomar uno de estos valores
+      "enum": [
+        "admin",
+        "usuario",
+        "editor"
+      ]
+    }
+  }
+}
