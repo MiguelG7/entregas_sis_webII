@@ -1,0 +1,21 @@
+{
+    "$id": "famoso.schema.json",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "famoso",
+    "type": "object",
+    "properties": {
+        "id":{
+            "type":"integer"
+        },
+        "nombre":{
+            "type":"string",
+            "description": "nombre del famoso"
+        },
+        "edad":{
+            "type":["integer", "null"],
+            "minimum":18,
+            "maximum":110,
+            "description":"edad del famoso"
+        }
+    },"required":["id","nombre"]
+}

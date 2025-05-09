@@ -1,0 +1,21 @@
+{
+    "$id": "ciudad.schema.json",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "ciudad",
+    "type":"object",
+    "properties": {
+        "id":{
+            "type":"integer",
+            "description":"id de la ciudad"
+        },
+        "nombre":{
+            "type":"string",
+            "description":"nombre de la ciudad"
+        },
+        "id_famosos_nativos":{
+            "type":"array",
+            "items":{"type":"integer"},
+            "description":"recopilación de todos los famosos de una ciudad mediante su id"
+        }
+    }, "required":["id","nombre"]
+}
