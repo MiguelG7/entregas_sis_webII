@@ -17,5 +17,6 @@
             "maximum":110,
             "description":"edad del famoso"
         }
-    },"required":["id","nombre"]
+    },"required":["id","nombre"],
+    "additionalProperties": false
 }

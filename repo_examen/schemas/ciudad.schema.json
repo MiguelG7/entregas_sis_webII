@@ -17,5 +17,6 @@
             "items":{"type":"integer"},
             "description":"recopilación de todos los famosos de una ciudad mediante su id"
         }
-    }, "required":["id","nombre"]
+    }, "required":["id","nombre"],
+    "additionalProperties": false
 }
